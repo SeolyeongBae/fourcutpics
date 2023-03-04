@@ -7,14 +7,52 @@ function App() {
 
   const video = document.getElementById("videoCam") as HTMLVideoElement;
   const canvas = document.getElementById("canvas") as HTMLCanvasElement;
-  const [CanvasState, setCanvasState] = useState("none"); //사
-  const [CameraState, setCameraState] = useState(""); //사
+  const [CanvasState, setCanvasState] = useState("none");
+  const [CameraState, setCameraState] = useState("");
+  const [picNums, setPicNums] = useState(0);
+  const [pics, setPics] = useState([]);
 
   useEffect(() => {
     getWebcam((stream: any) => {
       videoRef.current!.srcObject = stream;
     });
   }, []);
+
+  useEffect(() => {
+    if (picNums > 3) {
+      setCanvasState(""); // 켄버스 켜기
+      setCameraState("none"); //비디오 끄기
+
+      const video = document.getElementById("videoCam") as HTMLVideoElement;
+      const canvas = document.getElementById("canvas") as HTMLCanvasElement;
+      const context = canvas.getContext("2d");
+
+      if (context == null) return; // context may be null
+
+      context.scale(-1, 1); // 좌우 반전
+      context.translate(-1024, 0); // 좌우 반전
+      context.drawImage(video, 0, 0, 1024, 768);
+      canvas.toBlob((blob: any) => {
+        //캔버스의 이미지를 파일 객체로 만드는 과정
+        let file = new File([blob], "fileName.jpg", { type: "image/jpeg" });
+        const uploadFile = [file]; //이미지 객체
+      }, "image/jpeg");
+
+      const s: MediaStream = videoRef.current!.srcObject as MediaStream;
+      s.getTracks().forEach((track) => {
+        track.stop();
+      });
+    } else {
+      const video = document.getElementById("videoCam") as HTMLVideoElement;
+
+      setPics((prev) => {});
+      // const image = canvas.toDataURL(); // 이미지 저장하는 코드
+      // const link = document.createElement("a");
+      // link.href = image;
+      // link.download = "PaintJS[🎨]";
+      // link.click();
+    }
+  }, [picNums]);
 
   const getWebcam = (callback: any) => {
     try {
@@ -31,6 +69,7 @@ function App() {
 
   function GoToCamera() {
     // 다시 촬영
+    setPicNums(() => 0);
     const context = canvas.getContext("2d");
     if (context == null) return; // context may be null
 
@@ -46,33 +85,7 @@ function App() {
 
   function sreenShot() {
     // 카메라 촬영
-    setCanvasState(""); // 켄버스 켜기
-    setCameraState("none"); //비디오 끄기
-    const video = document.getElementById("videoCam") as HTMLVideoElement;
-    const canvas = document.getElementById("canvas") as HTMLCanvasElement;
-    const context = canvas.getContext("2d");
-
-    if (context == null) return; // context may be null
-
-    context.scale(-1, 1); // 좌우 반전
-    context.translate(-1024, 0); // 좌우 반전
-    context.drawImage(video, 0, 0, 1024, 768);
-    canvas.toBlob((blob: any) => {
-      //캔버스의 이미지를 파일 객체로 만드는 과정
-      let file = new File([blob], "fileName.jpg", { type: "image/jpeg" });
-      const uploadFile = [file]; //이미지 객체
-    }, "image/jpeg");
-
-    const image = canvas.toDataURL(); // 이미지 저장하는 코드
-    const link = document.createElement("a");
-    link.href = image;
-    link.download = "PaintJS[🎨]";
-    link.click();
-
-    const s: MediaStream = videoRef.current!.srcObject as MediaStream;
-    s.getTracks().forEach((track) => {
-      track.stop();
-    });
+    setPicNums((prev) => prev + 1);
   }
 
   return (
