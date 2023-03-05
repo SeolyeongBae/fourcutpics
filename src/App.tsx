@@ -1,6 +1,6 @@
-import { AnyPtrRecord } from "dns";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import Webcam from "react-webcam";
+import fourcutsImg from "./혜규네컷.png";
 import "./App.css";
 
 function App() {
@@ -26,36 +26,27 @@ function App() {
   useEffect(() => {
     if (picNums > 3) {
       setCanvasState(() => "");
-      {
-        pics.length !== 0 &&
-          pics.map((pic, index) => {
-            const draw = canvas.getContext("2d");
 
-            const img = new Image();
-            img.src = pic;
-            img.onload = function () {
-              draw!.drawImage(
-                img,
-                canvasLocation[index][0],
-                canvasLocation[index][1],
-                512,
-                384
-              );
-            };
-          });
-      }
+      const draw = canvas.getContext("2d");
+      const backGroundImg = new Image();
+      backGroundImg.src = fourcutsImg;
+      backGroundImg.onload = function () {
+        draw!.drawImage(backGroundImg, 0, 0, 1144, 938);
 
-      // canvas.toBlob((blob: any) => {
-      //   //캔버스의 이미지를 파일 객체로 만드는 과정
-      //   let file = new File([blob], "fileName.jpg", { type: "image/jpeg" });
-      //   const uploadFile = [file]; //이미지 객체
-      // }, "image/jpeg");
-    } else {
-      // const image = canvas.toDataURL(); // 이미지 저장하는 코드
-      // const link = document.createElement("a");
-      // link.href = image;
-      // link.download = "PaintJS[🎨]";
-      // link.click();
+        pics.map((pic, index) => {
+          const img = new Image();
+          img.src = pic;
+          img.onload = function () {
+            draw!.drawImage(
+              img,
+              canvasLocation[index][0],
+              canvasLocation[index][1],
+              512,
+              384
+            );
+          };
+        });
+      };
     }
   }, [picNums]);
 
@@ -75,103 +66,110 @@ function App() {
   }
 
   return (
-    <div
-      style={{
-        position: "absolute",
-        zIndex: "100",
-        width: "1024px",
-        backgroundColor: "white",
-      }}
-    >
-      <>
-        <canvas
-          id="canvas"
-          width="1144px"
-          height="938px"
-          style={{ display: canvasState }}
-        ></canvas>
+    <div style={{ position: "relative" }}>
+      <div
+        style={{
+          position: "absolute",
+          zIndex: "100",
+          backgroundColor: "white",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, 0%)",
+        }}
+      >
+        <div style={{ textAlign: "center", fontSize: "20px" }}>
+          독일에 있는 혜규를 위한 인생네컷!!
+          <p>처음 카메라가 나올 떄까지 기다려 보세용</p>
+        </div>
+        <>
+          <canvas
+            id="canvas"
+            width="1144px"
+            height="938px"
+            style={{ display: canvasState }}
+          ></canvas>
 
-        {picNums <= 3 ? (
-          <>
-            <Webcam
-              audio={false}
-              ref={webcamRef}
-              screenshotFormat="image/jpeg"
-              style={{
-                width: "1024px",
-                height: "768px",
-              }}
-            />
-            <div
-              onClick={capture}
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                width: "70px",
-                height: "70px",
-                margin: "10px",
-                borderRadius: "100px",
-                position: "absolute",
-                zIndex: "101",
-                bottom: "5%",
-                left: "46%",
-                cursor: "pointer",
-                backgroundColor: "white",
-              }}
-            >
+          {picNums <= 3 ? (
+            <>
+              <Webcam
+                audio={false}
+                ref={webcamRef}
+                screenshotFormat="image/jpeg"
+                style={{
+                  width: "1024px",
+                  height: "768px",
+                }}
+              />
+
+              <button
+                onClick={capture}
+                className="App-header"
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  width: "70px",
+                  height: "70px",
+                  margin: "10px",
+                  borderRadius: "100px",
+                  position: "absolute",
+                  zIndex: "101",
+                  bottom: "5%",
+                  left: "46%",
+                  cursor: "pointer",
+                  fontSize: "30px",
+                }}
+              >
+                {picNums + 1}
+              </button>
+            </>
+          ) : (
+            <>
+              <div style={{ textAlign: "center", fontSize: "20px" }}>
+                생일 축하해~!
+              </div>
               <div
                 style={{
-                  textAlign: "center",
-                  width: "60px",
-                  height: "60px",
-                  border: "2px solid",
-                  borderRadius: "100px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  cursor: "pointer",
+                  backgroundColor: "white",
                 }}
-              ></div>
-            </div>
-          </>
-        ) : (
-          <>
-            <div
-              onClick={GoToCamera}
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                width: "70px",
-                height: "70px",
-                margin: "10px",
-                borderRadius: "10px",
-                bottom: "5%",
-                left: "46%",
-                cursor: "pointer",
-                backgroundColor: "white",
-              }}
-            >
-              <p>다시 찍기</p>
-            </div>
-            <div
-              onClick={downloadPic}
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                width: "70px",
-                height: "70px",
-                margin: "10px",
-                borderRadius: "10px",
-                bottom: "5%",
-                left: "46%",
-                cursor: "pointer",
-                backgroundColor: "white",
-              }}
-            >
-              <p> 다운로드 </p>
-            </div>
-          </>
-        )}
-      </>
+              >
+                <div
+                  onClick={GoToCamera}
+                  style={{
+                    justifyContent: "center",
+                    alignItems: "center",
+                    margin: "10px",
+                    padding: "0 20px 0 20px",
+                    borderRadius: "10px",
+                    cursor: "pointer",
+                    backgroundColor: "pink",
+                  }}
+                >
+                  <p>다시 찍기</p>
+                </div>
+                <div
+                  onClick={downloadPic}
+                  style={{
+                    justifyContent: "center",
+                    alignItems: "center",
+                    padding: "0 20px 0 20px",
+                    margin: "10px",
+                    borderRadius: "10px",
+                    cursor: "pointer",
+                    backgroundColor: "pink",
+                  }}
+                >
+                  <p> 다운로드 </p>
+                </div>
+              </div>
+            </>
+          )}
+        </>
+      </div>
     </div>
   );
 }
