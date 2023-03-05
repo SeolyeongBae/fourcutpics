@@ -1,15 +1,16 @@
 {
   "files": {
-    "main.css": "/SeolyeongBae/fourcutpics/static/css/main.1d4983d0.css",
-    "main.js": "/SeolyeongBae/fourcutpics/static/js/main.6e3e3e0d.js",
-    "static/js/787.a003a3b5.chunk.js": "/SeolyeongBae/fourcutpics/static/js/787.a003a3b5.chunk.js",
-    "index.html": "/SeolyeongBae/fourcutpics/index.html",
-    "main.1d4983d0.css.map": "/SeolyeongBae/fourcutpics/static/css/main.1d4983d0.css.map",
-    "main.6e3e3e0d.js.map": "/SeolyeongBae/fourcutpics/static/js/main.6e3e3e0d.js.map",
-    "787.a003a3b5.chunk.js.map": "/SeolyeongBae/fourcutpics/static/js/787.a003a3b5.chunk.js.map"
+    "main.css": "/fourcutpics/static/css/main.1d4983d0.css",
+    "main.js": "/fourcutpics/static/js/main.d22a5ea9.js",
+    "static/js/787.a003a3b5.chunk.js": "/fourcutpics/static/js/787.a003a3b5.chunk.js",
+    "static/media/혜규네컷.png": "/fourcutpics/static/media/혜규네컷.4e3e478a2c11fbd510d2.png",
+    "index.html": "/fourcutpics/index.html",
+    "main.1d4983d0.css.map": "/fourcutpics/static/css/main.1d4983d0.css.map",
+    "main.d22a5ea9.js.map": "/fourcutpics/static/js/main.d22a5ea9.js.map",
+    "787.a003a3b5.chunk.js.map": "/fourcutpics/static/js/787.a003a3b5.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.1d4983d0.css",
-    "static/js/main.6e3e3e0d.js"
+    "static/js/main.d22a5ea9.js"
   ]
 }
